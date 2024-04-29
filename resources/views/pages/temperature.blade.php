@@ -8,12 +8,12 @@
 @push('scripts')
 <script>
     let chart; // global
-
+    let url = '{{url('/')}}'
 /**
  * Request data from the server, add it to the graph and set a timeout to request again
  */
 async function requestData() {
-    const result = await fetch('http://localhost:8000/api/temperature');
+    const result = await fetch(url+'/api/temperature');
     if (result.ok) {
         const data = await result.json();
 
