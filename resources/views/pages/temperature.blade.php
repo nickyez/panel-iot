@@ -2,7 +2,7 @@
 
 @section('content')
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <div id="container"></div>
+    <div id="temperature-data"></div>
 @endsection
 
 @push('scripts')
@@ -13,7 +13,7 @@
  * Request data from the server, add it to the graph and set a timeout to request again
  */
 async function requestData() {
-    const result = await fetch(url+'/api/temperature');
+    const result = await fetch(`${url}/api/temperature`);
     if (result.ok) {
         const data = await result.json();
 
@@ -32,7 +32,7 @@ async function requestData() {
 window.addEventListener('load', function () {
     chart = new Highcharts.Chart({
         chart: {
-            renderTo: 'container',
+            renderTo: 'temperature-data',
             defaultSeriesType: 'spline',
             events: {
                 load: requestData
