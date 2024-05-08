@@ -2,23 +2,23 @@
 
 @section('content')
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <div id="temperature-data"></div>
+    <div id="container"></div>
 @endsection
 
 @push('scripts')
 <script>
     let chart; // global
-    let url = '{{url('/')}}'
+    let url = '{{url('/')}}';
 /**
  * Request data from the server, add it to the graph and set a timeout to request again
  */
 async function requestData() {
-    const result = await fetch(`${url}/api/temperature`);
+    const result = await fetch(url+'/api/temperature');
     if (result.ok) {
         const data = await result.json();
 
         const [date, value] = [data.data[0].created_at, data.data[0].temperature];
-        const point = [new Date(date).getTime(), value];
+        const point = [new Date(date).getTime(), parseFloat(value)];
         const series = chart.series[0],
             shift = series.data.length > 20; // shift if the series is longer than 20
 
@@ -32,7 +32,7 @@ async function requestData() {
 window.addEventListener('load', function () {
     chart = new Highcharts.Chart({
         chart: {
-            renderTo: 'temperature-data',
+            renderTo: 'container',
             defaultSeriesType: 'spline',
             events: {
                 load: requestData
