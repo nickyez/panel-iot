@@ -18,10 +18,9 @@ async function requestData() {
         const data = await result.json();
 
         const [date, value] = [data.data[0].created_at, data.data[0].temperature];
-        const point = [new Date(date).getTime(), parseFloat(value)];
+        const point = [new Date(date).getTime(), parseFloat(value)]; // Bagian ini yang dirubah
         const series = chart.series[0],
             shift = series.data.length > 20; // shift if the series is longer than 20
-
         // add the point
         chart.series[0].addPoint(point, true, shift);
         // call it again after one second
